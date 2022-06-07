@@ -32,6 +32,15 @@ app.get("/page", (req, res) => {
   );
 });
 
+app.get("/random", (req, res) => {
+  res.send(`<div>
+    <h1>Random</h1>
+    <h2>title</h2>
+    <p>content</p>
+    <a href="/">Home</a>
+  </div>`);
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });

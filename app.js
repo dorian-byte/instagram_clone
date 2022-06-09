@@ -1,10 +1,26 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const PORT = 8080;
+const { MONGOURI } = require("./keys");
+
+mongoose.connect(MONGOURI);
+
+const connectedCallback = () => {
+  console.log("connected to mongo yeahh");
+};
+
+const errorCallback = (err) => {
+  console.log("error connecting to mongo", err);
+};
+
+mongoose.connection.on("connected", connectedCallback);
+
+mongoose.connection.on("error", errorCallback);
 
 app.get("/", (req, res) => {
   res.send(
-    "Hello World!<div></div><a href='/users'>Users</a><div></div><a href='/page'>StyledPage</a>"
+    "<div>Hello World!</div><div></div><a href='/users'>Users</a><div></div><a href='/page'>StyledPage</a><div></div><a href='/random'>RANDOM PAGE</a>"
   );
 });
 

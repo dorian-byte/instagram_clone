@@ -3,11 +3,22 @@ const app = express();
 const mongoose = require("mongoose");
 const PORT = 8080;
 const { MONGOURI } = require("./keys");
+
+mongoose.connect(MONGOURI);
+mongoose.connection.on("connected", () => {
+  console.log("connected to mongo yeahh");
+});
+mongoose.connection.on("error", (err) => {
+  console.log("error connecting to mongo", err);
+});
+
 const axios = require("axios");
 
 require("./models/user");
 
-// app.use(require("./routes/auth"));
+app.use(express.json());
+app.use(require("./routes/auth"));
+
 app.get("/", (req, res) => {
   axios.get("http://localhost:8081/").then((r) => {
     res.send("Hello World! this is 8080, this is second: " + r.data);
